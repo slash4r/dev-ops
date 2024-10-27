@@ -23,3 +23,38 @@ kubectl delete pods firstpod - deleting pod
 "create pod1.yaml file"
 
 kubectl apply -f pod1.yaml
+
+--------------------------------------------------
+
+"create multicontainer.yaml file"
+
+kubectl apply -f multicontainer.yaml
+
+kubectl get pods
+
+"Connect (/bin/sh of the webcontainer) and install net-tools to show ethernet interface"
+
+kubectl exec -it multicontainer -c webcontainer -- /bin/sh
+
+    apt update
+
+    apt install net-tools
+
+    ifconfig
+
+"sidecarcontainer"
+kubectl exec -it multicontainer -c sidecarcontainer -- /bin/sh
+
+"check volume inside sidecarcontainer"
+
+ls /var/logs
+
+"sidecarcontainer logs"
+
+kubectl logs -f multicontainer -c sidecarcontainer
+
+"orward the port of the pod to the host PC port"
+
+kubectl port-forward pod/multicontainer 8080:80
+
+"check everything and delete"
