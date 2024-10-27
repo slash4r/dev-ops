@@ -58,3 +58,51 @@ kubectl logs -f multicontainer -c sidecarcontainer
 kubectl port-forward pod/multicontainer 8080:80
 
 "check everything and delete"
+
+--------------------------------------------------
+
+"create deployment1.yaml file"
+
+kubectl apply -f deployment1.yaml
+
+"see the result"
+
+kubectl get pods
+
+"try to delete one pod"
+
+kubectl delete pods firstdeployment-65d978c499-7vzhw
+
+"see, that K8s automatically creates new pod"
+
+kubectl get pods
+
+"Scale up to 5 replicas"
+
+kubectl get deployments
+
+kubectl scale deployments firstdeployment --replicas=5
+
+"Scale down to 3 replicas"
+
+kubectl scale deployments firstdeployment --replicas=3
+
+"Connect one of the pod with bash
+
+kubectl get pods -o wide
+
+kubectl exec -it firstdeployment-65d978c499-6rjzw -- bash
+
+"To install ifconfig, run: "apt update", "apt install net-tools"
+To install ping, run: "apt install iputils-ping"
+Show ethernet interfaces"
+    ifconfig
+
+"Port-forward from one of the pod to host (8085:80)"
+
+kubectl port-forward firstdeployment-65d978c499-6rjzw 8085:80
+
+"check everything..."
+
+--------------------------------------------------
+
