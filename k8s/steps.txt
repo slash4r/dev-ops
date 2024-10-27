@@ -1,0 +1,25 @@
+winget install Kubernetes.minikube - install minikube locally
+
+minikube start - in PowerShell, download some packages tho
+
+kubectl run firstpod --image=nginx - big letters are restricted
+
+kubectl get pods -o wide
+
+kubectl describe pods firstpod
+
+kubectl logs firstpod
+
+kubectl logs -f firstpod - (follow logs) logs are displayed continuously, showing any new log entries as they happen
+
+kubectl exec firstpod -- ls - execute command "ls" inside pod
+
+kubectl exec -it firstpod -- bash - entering into the pod and running bash or sh on pod
+
+kubectl delete pods firstpod - deleting pod
+
+--------------------------------------------------
+
+"create pod1.yaml file"
+
+kubectl apply -f pod1.yaml
