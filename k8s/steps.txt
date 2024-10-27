@@ -106,3 +106,56 @@ kubectl port-forward firstdeployment-65d978c499-6rjzw 8085:80
 
 --------------------------------------------------
 
+"create two files: recreate-deployment.yaml and rolling-deployment.yaml"
+
+"run deployment"
+
+kubectl apply -f recreate-deployment.yaml
+
+kubectl get pods -w
+
+"Watching replica set's status"
+
+kubectl get rs -w
+
+"Update image version"
+
+kubectl set image deployment rcdeployment nginx=httpd
+
+"after new replicaset and pods are created, old ones are deleted".
+
+kubectl get pods -w
+
+
+"delete pod and run another"
+
+kubectl apply -f rolling-deployment.yaml
+
+"change conf file like this: 
+change to "httpd" instead of "nginx", save and exit"
+
+kubectl edit deployment rolldeployment --record
+
+"nothing changed..."
+
+"Run new deployment version. --record should be used to add old deployment versions in the history list"
+
+kubectl set image deployment rolldeployment nginx=httpd:alpine --record=true
+
+"show history of the deployments"
+
+kubectl rollout history deployment rolldeployment
+
+kubectl rollout history deployment rolldeployment --revision=1
+
+"Rollback to the revision=1"
+
+kubectl rollout undo deployment rolldeployment --to-revision=1
+
+"see the logs of rollout with"
+
+kubectl rollout status deployment rolldeployment -w
+
+"delete deployment"
+
+kubectl delete -f rolling-deployment.yaml
